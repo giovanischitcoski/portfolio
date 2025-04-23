@@ -57,4 +57,3 @@ Seja bem-vindo(a) ao meu portfólio! Este site apresenta um pouco sobre mim, meu
 
 ---
 > "A persistência é o caminho do êxito." – Charles Chaplin
-```
