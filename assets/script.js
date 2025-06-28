@@ -196,3 +196,53 @@ document.addEventListener('DOMContentLoaded', function() {
     handleResponsive();
     window.addEventListener('resize', handleResponsive);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const downloadBtn = document.getElementById('download-btn');
+    const downloadCounter = document.getElementById('download-counter');
+    
+    let count = parseInt(downloadCounter.textContent);
+    
+    downloadBtn.addEventListener('click', function() {
+        // Criar link temporário para download
+        const link = document.createElement('a');
+        link.href = 'assets/Giovani_Melo_CV.pdf'; // Caminho do arquivo PDF
+        link.download = 'Giovani_Melo_CV.pdf'; // Nome do arquivo ao ser baixado
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Atualizar contador
+        count++;
+        downloadCounter.textContent = count;
+        
+        // Feedback visual com suas cores
+        downloadBtn.innerHTML = '<i class="fas fa-check"></i> Download Concluído!';
+        downloadBtn.classList.add('downloaded');
+        
+        setTimeout(() => {
+            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Baixar Currículo';
+            downloadBtn.classList.remove('downloaded');
+        }, 2000);
+    });
+    
+    // Animação do contador
+    animateCounter();
+    
+    function animateCounter() {
+        let start = 0;
+        const end = count;
+        const duration = 2000;
+        const increment = end / (duration / 16);
+        
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+                clearInterval(timer);
+                downloadCounter.textContent = end;
+            } else {
+                downloadCounter.textContent = Math.floor(start);
+            }
+        }, 16);
+    }
+});

@@ -342,7 +342,8 @@ nav ul li a.active::after {
 
 /* About Section */
 .about {
-    background-color: rgba(38, 38, 38, 0.9);
+    background-color: var(--dark);
+    padding: 60px 0;
 }
 
 .about-content {
@@ -361,6 +362,7 @@ nav ul li a.active::after {
 }
 
 .skills {
+    margin-top: 20px;
     background-color: var(--dark);
     padding: 20px;
     border-radius: 10px;
@@ -403,6 +405,74 @@ nav ul li a.active::after {
     color: var(--light-yellow);
     text-align: center;
     font-weight: 500;
+}
+
+.download-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.download-btn {
+    background: linear-gradient(135deg, var(--dark-green), var(--medium-green));
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(106, 115, 39, 0.4);
+}
+
+.download-btn i {
+    margin-right: 10px;
+}
+
+.download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(106, 115, 39, 0.6);
+    background: linear-gradient(135deg, var(--medium-green), var(--dark-green));
+}
+
+.download-count {
+    margin-top: 20px;
+    color: var(--light-green);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.download-count i {
+    margin-right: 8px;
+    color: var(--medium-green);
+}
+
+/* Efeito quando o download é concluído */
+.download-btn.downloaded {
+    background: linear-gradient(135deg, var(--light-green), var(--medium-green));
+    color: var(--dark);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .resume-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .resume-info {
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+    
+    .resume-stats {
+        justify-content: center;
+    }
 }
 
 /* Contact Section */
