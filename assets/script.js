@@ -37,18 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Ativar link do menu conforme scroll
-    const sections = document.querySelectorAll('section');
+    // Ativar link do menu conforme scroll (VERSÃO CORRIGIDA)
+    const sections = document.querySelectorAll('section[id]');
     
-    window.addEventListener('scroll', function() {
+    function checkActiveSection() {
         let current = '';
+        const scrollPosition = window.scrollY + 150; // Ajuste para ativar antes de chegar na seção
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
             
-            if (pageYOffset >= (sectionTop - 100)) {
-                current = section.getAttribute('id');
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                current = sectionId;
             }
         });
         
@@ -58,7 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 link.classList.add('active');
             }
         });
-    });
+    }
+    
+    // Adiciona os event listeners
+    window.addEventListener('scroll', checkActiveSection);
+    window.addEventListener('load', checkActiveSection);
 
     // Animação das barras de habilidades quando visíveis
     const skillBars = document.querySelectorAll('.skill-level');
@@ -76,21 +82,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Observar quando a seção de habilidades entra na viewport
     const skillsSection = document.querySelector('.skills');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateSkillBars();
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-    
     if (skillsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
         observer.observe(skillsSection);
     }
 
     // Formulário de contato
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
+    document.getElementById('contact-form')?.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const form = e.target;
@@ -139,6 +145,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Botão de download do currículo
+    const downloadBtn = document.getElementById('download-btn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function() {
+            // Criar link temporário para download
+            const link = document.createElement('a');
+            link.href = 'assets/Giovani_Melo_CV.pdf';
+            link.download = 'Giovani_Melo_CV.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Feedback visual
+            downloadBtn.innerHTML = '<i class="fas fa-check"></i> Download Concluído!';
+            downloadBtn.classList.add('downloaded');
+            
+            setTimeout(() => {
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Baixar Currículo';
+                downloadBtn.classList.remove('downloaded');
+            }, 2000);
+        });
+    }
+
     // Responsividade - ajustar layout para telas menores
     function handleResponsive() {
         if (window.innerWidth <= 992) {
@@ -148,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 hero.style.flexDirection = 'column';
                 hero.querySelector('.hero-content').style.paddingRight = '0';
                 hero.querySelector('.hero-content h2').style.textAlign = 'center';
-                hero.querySelector('.hero-content h2::after').style.margin = '15px auto 0';
             }
             
             // Ajustar layout sobre mim para mobile
@@ -173,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 hero.style.flexDirection = 'row';
                 hero.querySelector('.hero-content').style.paddingRight = '40px';
                 hero.querySelector('.hero-content h2').style.textAlign = 'left';
-                hero.querySelector('.hero-content h2::after').style.margin = '15px 0 0';
             }
             
             const aboutContent = document.querySelector('.about-content');
@@ -195,54 +222,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Executar na carga e no redimensionamento
     handleResponsive();
     window.addEventListener('resize', handleResponsive);
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const downloadBtn = document.getElementById('download-btn');
-    const downloadCounter = document.getElementById('download-counter');
-    
-    let count = parseInt(downloadCounter.textContent);
-    
-    downloadBtn.addEventListener('click', function() {
-        // Criar link temporário para download
-        const link = document.createElement('a');
-        link.href = 'assets/Giovani_Melo_CV.pdf'; // Caminho do arquivo PDF
-        link.download = 'Giovani_Melo_CV.pdf'; // Nome do arquivo ao ser baixado
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // Atualizar contador
-        count++;
-        downloadCounter.textContent = count;
-        
-        // Feedback visual com suas cores
-        downloadBtn.innerHTML = '<i class="fas fa-check"></i> Download Concluído!';
-        downloadBtn.classList.add('downloaded');
-        
-        setTimeout(() => {
-            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Baixar Currículo';
-            downloadBtn.classList.remove('downloaded');
-        }, 2000);
-    });
-    
-    // Animação do contador
-    animateCounter();
-    
-    function animateCounter() {
-        let start = 0;
-        const end = count;
-        const duration = 2000;
-        const increment = end / (duration / 16);
-        
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= end) {
-                clearInterval(timer);
-                downloadCounter.textContent = end;
-            } else {
-                downloadCounter.textContent = Math.floor(start);
-            }
-        }, 16);
-    }
 });

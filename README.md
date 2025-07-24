@@ -31,6 +31,7 @@ Seja bem-vindo(a) ao meu portfólio! Este site apresenta um pouco sobre mim, meu
 ```
 📦 portfolio/
  ┣ 📁 assets/
+ ┃ ┗ 📄Giovani_Melo_CV.pdf
  ┃ ┗ 📁 img/
  ┃ ┗ 📜 styles.css
  ┃ ┗ 📜 script.js
