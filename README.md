@@ -35,7 +35,7 @@ Seja bem-vindo(a) ao meu portfólio! Este site apresenta um pouco sobre mim, meu
  ┃ ┗ 📁 img/
  ┃ ┗ 📜 styles.css
  ┃ ┗ 📜 script.js
- ┣ 📜 home.html
+ ┣ 📜 index.html
  ┗ 📜 README.md
 ```
 
