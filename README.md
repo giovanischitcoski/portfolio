@@ -4,7 +4,7 @@ Seja bem-vindo(a) ao meu portfólio! Este site apresenta um pouco sobre mim, meu
 
 ## 🌐 Acesse o site
 
-👉 [Portfolio](https://giovanischitcoski.github.io/portfolio/home.html)  
+👉 [Portfolio](https://portfolio-giovani-melo.vercel.app/)  
 
 ---
 
